@@ -18,8 +18,8 @@ validation.
 
 This project is based on the original
 [wshuyi/remotion-video-skill][original-skill] project. That repository provided
-the initial Remotion and TTS knowledge base for a Claude-oriented workflow.
-Motion Reel keeps the useful video production patterns while reshaping the
+the initial Remotion and TTS knowledge base. Motion Reel keeps the useful video
+production patterns while reshaping the
 skill for Codex conventions, pnpm-first Node workflows, uv-managed Python
 helpers, bilingual documentation, and GitHub release automation without npm
 publishing.
