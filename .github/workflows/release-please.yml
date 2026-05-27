@@ -1,0 +1,81 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: .github/release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Sync moving version tags
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          MAJOR_VERSION="${PACKAGE_VERSION%%.*}"
+          MINOR_VERSION="$(node -p "const [major, minor] = process.argv[1].split('.'); major + '.' + minor" "$PACKAGE_VERSION")"
+          TARGET_SHA="${{ steps.release.outputs.sha }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -f "v${MAJOR_VERSION}" "$TARGET_SHA"
+          git tag -f "v${MINOR_VERSION}" "$TARGET_SHA"
+          git push --force origin "refs/tags/v${MAJOR_VERSION}" "refs/tags/v${MINOR_VERSION}"
+
+      - name: Checkout release commit
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.release.outputs.sha }}
+
+      - name: Setup pnpm
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.0
+
+      - name: Setup Node
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: pnpm
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify skill package
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: |
+          pnpm lint
+          pnpm test
+          pnpm build
+
+      - name: Upload skill archive
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag_name }}
+        run: gh release upload "$RELEASE_TAG" dist/motion-reel.zip --clobber
+

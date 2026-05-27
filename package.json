@@ -1,0 +1,32 @@
+{
+  "name": "motion-reel",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Codex skill for creating programmatic videos with Remotion.",
+  "type": "module",
+  "scripts": {
+    "lint": "node scripts/validate-skill.mjs",
+    "test": "node scripts/check-readmes.mjs",
+    "build": "node scripts/build-release.mjs"
+  },
+  "keywords": [
+    "codex",
+    "skill",
+    "remotion",
+    "video",
+    "tts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Albert-PZY/motion-reel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Albert-PZY/motion-reel/issues"
+  },
+  "homepage": "https://github.com/Albert-PZY/motion-reel#readme",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "packageManager": "pnpm@11.1.0"
+}
