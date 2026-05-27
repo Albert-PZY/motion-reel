@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
+import shutil
 import subprocess
 from pathlib import Path
 from typing import TypedDict
@@ -20,11 +22,12 @@ except ImportError as exc:
     raise SystemExit("Missing dependency. Run: uv add edge-tts") from exc
 
 
-FPS = 30
-VOICE = "zh-CN-YunyangNeural"
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "public" / "audio"
-CONFIG_FILE = PROJECT_ROOT / "src" / "audioConfig.ts"
+FPS = int(os.environ.get("MOTION_REEL_FPS", "30"))
+VOICE = os.environ.get("EDGE_TTS_VOICE", "zh-CN-YunyangNeural")
+OUTPUT_DIR = Path(os.environ.get("MOTION_REEL_AUDIO_DIR", str(PROJECT_ROOT / "public" / "audio")))
+CONFIG_FILE = Path(os.environ.get("MOTION_REEL_CONFIG_FILE", str(PROJECT_ROOT / "src" / "audioConfig.ts")))
+SCENES_FILE = Path(os.environ.get("MOTION_REEL_SCENES_FILE", str(PROJECT_ROOT / "scripts" / "scenes.json")))
 
 
 class Scene(TypedDict):
@@ -33,21 +36,39 @@ class Scene(TypedDict):
     text: str
 
 
-SCENES: list[Scene] = [
-    {
-        "id": "01-intro",
-        "title": "Opening",
-        "text": "欢迎观看本期视频。",
-    },
-    {
-        "id": "02-main",
-        "title": "Main idea",
-        "text": "今天我们用一个清晰的例子说明核心概念。",
-    },
-]
+def load_scenes() -> list[Scene]:
+    if not SCENES_FILE.exists():
+        raise SystemExit(
+            f"Scene file not found: {SCENES_FILE}\n"
+            "Copy templates/scenes.json to scripts/scenes.json and edit it first.",
+        )
+
+    payload = json.loads(SCENES_FILE.read_text(encoding="utf-8"))
+    raw_scenes = payload.get("scenes") if isinstance(payload, dict) else payload
+    if not isinstance(raw_scenes, list):
+        raise SystemExit("Scene file must be a JSON array or an object with a scenes array.")
+
+    scenes: list[Scene] = []
+    for index, raw_scene in enumerate(raw_scenes, start=1):
+        if not isinstance(raw_scene, dict):
+            raise SystemExit(f"Scene #{index} must be an object.")
+        missing = {"id", "title", "text"} - set(raw_scene)
+        if missing:
+            raise SystemExit(f"Scene #{index} is missing fields: {', '.join(sorted(missing))}")
+        scenes.append(
+            {
+                "id": str(raw_scene["id"]),
+                "title": str(raw_scene["title"]),
+                "text": str(raw_scene["text"]),
+            },
+        )
+    return scenes
 
 
 def get_audio_duration(file_path: Path) -> float:
+    if shutil.which("ffprobe") is None:
+        raise SystemExit("ffprobe was not found. Install FFmpeg before generating audio.")
+
     result = subprocess.run(
         [
             "ffprobe",
@@ -63,8 +84,12 @@ def get_audio_duration(file_path: Path) -> float:
         check=False,
         text=True,
     )
+    if result.returncode != 0:
+        raise RuntimeError(f"ffprobe failed for {file_path}: {result.stderr.strip()}")
     output = result.stdout.strip()
-    return float(output) if output else 0.0
+    if not output:
+        raise RuntimeError(f"ffprobe returned no duration for {file_path}")
+    return float(output)
 
 
 async def generate_scene_audio(scene: Scene) -> dict[str, str | int | float]:
@@ -141,13 +166,15 @@ export const TOTAL_FRAMES =
 
 async def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    scenes = load_scenes()
 
     print(f"Edge TTS voice: {VOICE}")
+    print(f"Scene file: {SCENES_FILE}")
     print(f"Output directory: {OUTPUT_DIR}")
 
     results: list[dict[str, str | int | float]] = []
-    for index, scene in enumerate(SCENES, start=1):
-        print(f"[{index}/{len(SCENES)}] {scene['id']}...", flush=True)
+    for index, scene in enumerate(scenes, start=1):
+        print(f"[{index}/{len(scenes)}] {scene['id']}...", flush=True)
         result = await generate_scene_audio(scene)
         results.append(result)
         print(
@@ -167,4 +194,3 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-

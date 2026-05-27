@@ -1,0 +1,20 @@
+{
+  "scenes": [
+    {
+      "id": "01-intro",
+      "title": "Opening",
+      "text": "欢迎观看本期视频。"
+    },
+    {
+      "id": "02-concept",
+      "title": "Core concept",
+      "text": "今天我们用一个清晰的例子说明核心概念。"
+    },
+    {
+      "id": "03-summary",
+      "title": "Summary",
+      "text": "最后快速回顾一下整个流程。"
+    }
+  ]
+}
+
