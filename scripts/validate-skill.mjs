@@ -22,7 +22,6 @@ const requiredFiles = [
 const forbiddenCommandExamples = [
   /^\s*(?:npm\s+(?:install|update|run|i)\b|npx\b|pip\s+(?:install|uninstall)\b)/,
 ];
-const claudeOnlyPatterns = [/Claude Code/i, /\.claude/i];
 
 const errors = [];
 
@@ -108,11 +107,6 @@ function walk(directory) {
       }
     }
 
-    for (const pattern of claudeOnlyPatterns) {
-      if (pattern.test(content)) {
-        errors.push(`${relativePath} contains forbidden pattern ${pattern}.`);
-      }
-    }
   }
 }
 

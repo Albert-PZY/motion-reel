@@ -4,8 +4,8 @@
 
 > 面向 Codex 的 Remotion 编程式视频 Skill，支持 React 视频、场景化配音、字幕、数据驱动动画和 3D 动效。
 
-Motion Reel 将原本面向 Claude 的 Remotion 视频 Skill 改造成 Codex 原生
-Skill。它为 Codex 提供一套清晰的工作流，用于规划、实现、调试和渲染
+Motion Reel 将上游 Remotion 视频 Skill 改造成 Codex 原生 Skill。它为
+Codex 提供一套清晰的工作流，用于规划、实现、调试和渲染
 Remotion 视频，并覆盖场景数据、TTS 配音、音画同步、视觉节奏和可重复发布产物。
 
 这个仓库本身就是一个可用的 Codex Skill 目录：`SKILL.md` 是运行时入口，
@@ -15,8 +15,8 @@ Remotion 视频，并覆盖场景数据、TTS 配音、音画同步、视觉节�
 ## 来源与致谢
 
 本项目基于 [wshuyi/remotion-video-skill][original-skill] 改造。原仓库提供了
-面向 Claude 工作流的 Remotion 与 TTS 知识基础。Motion Reel 保留其中有价值的
-视频制作模式，同时按 Codex 规范重构触发描述、pnpm 优先的 Node 工作流、
+Remotion 与 TTS 知识基础。Motion Reel 保留其中有价值的视频制作模式，同时
+按 Codex 规范重构触发描述、pnpm 优先的 Node 工作流、
 uv 管理的 Python 辅助脚本、双语文档，以及不发布 npm 包的 GitHub Release
 自动化。
 
