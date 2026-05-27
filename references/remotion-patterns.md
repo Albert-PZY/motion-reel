@@ -129,11 +129,23 @@ Register defaults:
 />
 ```
 
+Create `props.json`:
+
+```json
+{
+  "title": "Launch"
+}
+```
+
 Render with props:
 
 ```bash
-pnpm exec remotion render Main out/video.mp4 --props='{"title":"Launch"}'
+pnpm exec remotion render Main out/video.mp4 --props=props.json
 ```
+
+Use a props file for cross-shell reliability. Remotion supports inline JSON
+strings, but its own CLI documentation notes that Windows shells strip quote
+characters from inline JSON.
 
 ## Rendering
 
@@ -216,4 +228,3 @@ import { MainVideo } from "./MainVideo";
 - Keep each scene's mounted media and 3D canvases minimal.
 - Use `delayRender()` and `continueRender()` for async asset preparation when
   necessary.
-

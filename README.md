@@ -51,8 +51,8 @@ as a Codex skill folder or release archive, not as a package registry artifact.
 | Remotion workflow | Project inspection, composition setup, timeline patterns, render commands, and verification steps |
 | Package management | pnpm-only Node guidance and CI scripts |
 | Python helpers | uv-first TTS scripts for Edge TTS and MiniMax TTS |
-| Scene timing | `audioConfig.ts` template and helpers for audio-driven scene durations |
-| Narration | Per-scene audio generation, duration probing, manifest output, and resumable generation |
+| Scene timing | `scenes.json` and `audioConfig.ts` templates for audio-driven scene durations |
+| Narration | Data-driven per-scene audio generation, duration probing, manifest output, and resumable generation |
 | 3D video | Remotion Three guidance for cameras, GLTF models, video textures, and coordinate pitfalls |
 | Tutorial design | Process-animation patterns for explanatory and educational videos |
 | Documentation | English and Simplified Chinese READMEs |
@@ -112,20 +112,23 @@ Use $motion-reel to create a data-driven yearly review video from this JSON file
 | `references/tts.md` | Edge TTS and MiniMax TTS setup, audio timing, and sync guidance |
 | `references/three.md` | `@remotion/three` camera, model, texture, and coordinate guidance |
 | `references/tutorial-video.md` | Explainer-video pacing, script structure, and process animation patterns |
+| `templates/scenes.json` | Copyable narration scene data template |
 | `templates/audioConfig.ts` | Copyable scene timing template |
 | `scripts/generate_audio_edge.py` | Edge TTS helper for Remotion projects |
 | `scripts/generate_audio_minimax.py` | MiniMax TTS helper for Remotion projects |
 
 ## TTS Helpers
 
-The Python scripts are intended to be copied into a Remotion project and edited
-for that project's scenes. They assume `ffprobe` is available for duration
-detection.
+The Python scripts are intended to be copied into a Remotion project. Scene
+narration lives in `scripts/scenes.json`, so most projects should edit data
+rather than Python source. The scripts assume `ffprobe` is available for
+duration detection.
 
 Use uv:
 
 ```sh
 uv venv
+cp templates/scenes.json scripts/scenes.json
 uv add edge-tts
 uv run python scripts/generate_audio_edge.py
 ```
@@ -133,6 +136,7 @@ uv run python scripts/generate_audio_edge.py
 For MiniMax:
 
 ```sh
+cp templates/scenes.json scripts/scenes.json
 uv add requests
 export MINIMAX_API_KEY="your-api-key"
 export MINIMAX_VOICE_ID="your-voice-id"
@@ -158,6 +162,7 @@ The local checks validate:
 - required skill files and metadata;
 - absence of UTF-8 BOM and CRLF line endings in text files;
 - README structure in both languages;
+- Python helper syntax;
 - release archive creation at `dist/motion-reel.zip`.
 
 ## Release
@@ -188,4 +193,3 @@ dependency folders out of commits.
 [conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/ "Conventional Commits 1.0.0"
 [original-skill]: https://github.com/wshuyi/remotion-video-skill "Original remotion-video skill"
 [remotion-docs]: https://www.remotion.dev/docs "Remotion documentation"
-

@@ -118,9 +118,11 @@ For narrated tutorial or explainer videos, make audio the timing authority:
 4. Set `Composition.durationInFrames` from `TOTAL_FRAMES`.
 5. Render one `Sequence` per scene and mount scene audio inside that sequence.
 
-Copy `templates/audioConfig.ts` when starting a scene-driven project. Use
+Copy `templates/scenes.json` to `scripts/scenes.json`, write the narration
+there, then copy `templates/audioConfig.ts` as the initial timing file. Use
 `scripts/generate_audio_edge.py` for a free local TTS path and
-`scripts/generate_audio_minimax.py` when the user has MiniMax credentials.
+`scripts/generate_audio_minimax.py` when the user has MiniMax credentials. Set
+`MOTION_REEL_SCENES_FILE` only when the scene JSON lives elsewhere.
 
 Read [references/tts.md](references/tts.md) before implementing TTS or audio
 sync.
@@ -150,7 +152,7 @@ For every implementation, run the smallest meaningful checks:
 
 ```bash
 pnpm lint
-pnpm render
+pnpm exec remotion render Main out/video.mp4
 ```
 
 For expensive renders, first verify a still frame or a short frame range:
@@ -168,4 +170,3 @@ pnpm dev
 ```
 
 Report the exact commands run and any render artifacts created.
-

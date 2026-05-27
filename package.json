@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "lint": "node scripts/validate-skill.mjs",
-    "test": "node scripts/check-readmes.mjs",
+    "test": "node scripts/check-readmes.mjs && node scripts/check-python-syntax.mjs",
     "build": "node scripts/build-release.mjs"
   },
   "keywords": [
