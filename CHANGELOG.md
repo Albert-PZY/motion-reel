@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Albert-PZY/motion-reel/compare/v1.1.0...v1.1.1) (2026-05-27)
+
+
+### Bug Fixes
+
+* remove legacy agent references ([cf7b0af](https://github.com/Albert-PZY/motion-reel/commit/cf7b0af5845fc341ff02699634c40e8da6cde2e0))
+
 ## [1.1.0](https://github.com/Albert-PZY/motion-reel/compare/v1.0.0...v1.1.0) (2026-05-27)
 
 
