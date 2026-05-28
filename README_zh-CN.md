@@ -49,6 +49,7 @@ Motion Reel 使用 Semantic Versioning 和稳定 GitHub Release，例如 `v0.1.0
 | Python 辅助 | 使用 uv 的 Edge TTS 与 MiniMax TTS 脚本 |
 | 场景时长 | `scenes.json` 与 `audioConfig.ts` 模板和音频驱动的场景时长计算 |
 | 配音 | 数据驱动的单场景音频生成、时长检测、manifest 输出和断点续作 |
+| 质量门禁 | 关键帧检查、短片段动效核验、最多三次定向重试、最佳候选选择、最终合并和封面导出 |
 | 3D 视频 | Remotion Three 的相机、GLTF、视频纹理和坐标陷阱指南 |
 | 教程视频 | 面向讲解视频的过程动画、脚本节奏和视觉引导模式 |
 | 文档 | 英文与简体中文 README |
@@ -105,6 +106,7 @@ Use $motion-reel to create a data-driven yearly review video from this JSON file
 | `references/tts.md` | Edge TTS 与 MiniMax TTS 配置、音频时长和同步指南 |
 | `references/three.md` | `@remotion/three` 相机、模型、纹理和坐标指南 |
 | `references/tutorial-video.md` | 教程视频节奏、脚本结构和过程动画模式 |
+| `references/quality-gate.md` | 成片检查、重试、合并和封面选择流程 |
 | `templates/scenes.json` | 可复制的旁白场景数据模板 |
 | `templates/audioConfig.ts` | 可复制的场景时长模板 |
 | `scripts/generate_audio_edge.py` | 面向 Remotion 项目的 Edge TTS 辅助脚本 |

@@ -53,6 +53,7 @@ as a Codex skill folder or release archive, not as a package registry artifact.
 | Python helpers | uv-first TTS scripts for Edge TTS and MiniMax TTS |
 | Scene timing | `scenes.json` and `audioConfig.ts` templates for audio-driven scene durations |
 | Narration | Data-driven per-scene audio generation, duration probing, manifest output, and resumable generation |
+| Quality gate | Still-frame review, short motion checks, up to three targeted retries, best-candidate selection, final merge, and cover export |
 | 3D video | Remotion Three guidance for cameras, GLTF models, video textures, and coordinate pitfalls |
 | Tutorial design | Process-animation patterns for explanatory and educational videos |
 | Documentation | English and Simplified Chinese READMEs |
@@ -112,6 +113,7 @@ Use $motion-reel to create a data-driven yearly review video from this JSON file
 | `references/tts.md` | Edge TTS and MiniMax TTS setup, audio timing, and sync guidance |
 | `references/three.md` | `@remotion/three` camera, model, texture, and coordinate guidance |
 | `references/tutorial-video.md` | Explainer-video pacing, script structure, and process animation patterns |
+| `references/quality-gate.md` | Finished-video review, retry, merge, and cover-selection workflow |
 | `templates/scenes.json` | Copyable narration scene data template |
 | `templates/audioConfig.ts` | Copyable scene timing template |
 | `scripts/generate_audio_edge.py` | Edge TTS helper for Remotion projects |

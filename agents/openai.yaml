@@ -1,7 +1,6 @@
 interface:
   display_name: "Motion Reel"
-  short_description: "Create Remotion videos with Codex"
-  default_prompt: "Use $motion-reel to build a narrated Remotion explainer video with scene-timed audio."
+  short_description: "Create verified Remotion videos with Codex"
+  default_prompt: "Use $motion-reel to build a narrated Remotion explainer video with scene-timed audio, visual review, and a cover still."
 policy:
   allow_implicit_invocation: true
-
