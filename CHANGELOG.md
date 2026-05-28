@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/Albert-PZY/motion-reel/compare/v1.1.1...v1.2.0) (2026-05-28)
+
+
+### Features
+
+* add video quality gate workflow ([eb33ec6](https://github.com/Albert-PZY/motion-reel/commit/eb33ec6e478a9fda78747e153e56c30686d750ad))
+* add video quality gate workflow ([e442cb3](https://github.com/Albert-PZY/motion-reel/commit/e442cb3edad190e09cdbd15718efb273d8989002))
+
 ## [1.1.1](https://github.com/Albert-PZY/motion-reel/compare/v1.1.0...v1.1.1) (2026-05-27)
 
 
