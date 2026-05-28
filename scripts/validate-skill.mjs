@@ -9,6 +9,7 @@ const requiredFiles = [
   "references/tts.md",
   "references/three.md",
   "references/tutorial-video.md",
+  "references/quality-gate.md",
   "templates/audioConfig.ts",
   "templates/scenes.json",
   "scripts/generate_audio_edge.py",

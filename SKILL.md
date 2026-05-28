@@ -1,6 +1,6 @@
 ---
 name: motion-reel
-description: Create programmatic videos with Remotion in Codex. Use when the user asks Codex to build, plan, debug, render, or automate React/Remotion videos, tutorial videos, explainer animations, TTS narrated videos, captions, music visualizers, data-driven videos, 3D scenes with @remotion/three, or batch video generation. Trigger phrases include "Remotion", "用代码做视频", "编程视频", "React 视频", "视频自动化", "教程视频", "配音视频", "字幕视频", and "$motion-reel".
+description: Create programmatic videos with Remotion in Codex. Use when the user asks Codex to build, plan, debug, render, verify, or automate React/Remotion videos, tutorial videos, explainer animations, TTS narrated videos, captions, music visualizers, data-driven videos, 3D scenes with @remotion/three, video covers, final video delivery, or batch video generation. Trigger phrases include "Remotion", "用代码做视频", "编程视频", "React 视频", "视频自动化", "配音视频", "字幕视频", "视频封面", "成片交付", and "$motion-reel".
 ---
 
 # Motion Reel
@@ -146,27 +146,23 @@ Read [references/three.md](references/three.md) before building 3D scenes.
 Read [references/tutorial-video.md](references/tutorial-video.md) before writing
 long-form educational scripts or process animations.
 
-## Verification
+## Delivery Quality Gate
 
-For every implementation, run the smallest meaningful checks:
+For every implementation, run the smallest meaningful technical checks:
 
 ```bash
 pnpm lint
-pnpm exec remotion render Main out/video.mp4
 ```
 
-For expensive renders, first verify a still frame or a short frame range:
+For finished animation or video delivery, also run the visual quality gate in
+[references/quality-gate.md](references/quality-gate.md):
 
-```bash
-pnpm exec remotion still Main --frame=30 out/check.png
-pnpm exec remotion render Main out/check.mp4 --frames=0-90
-```
+- inspect representative stills and a short motion render before full delivery;
+- retry failed candidates with targeted fixes, up to three total attempts;
+- if all attempts remain imperfect, choose the candidate that best preserves the
+  user's requested subject, data, flow, and visual clarity;
+- render or merge the final video only after the chosen candidate passes review;
+- export a matching cover still such as `out/cover.png` with the delivered video.
 
-If a browser preview is needed, run Remotion Studio and inspect it with browser
-tools:
-
-```bash
-pnpm dev
-```
-
-Report the exact commands run and any render artifacts created.
+Report the exact commands run, the selected attempt, the final video path, the
+cover path, and any residual quality risks.
